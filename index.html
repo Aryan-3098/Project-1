@@ -25,7 +25,9 @@
         margin-left: auto;
         margin-right: auto;
       }
-
+      p {
+        margin: 16px 0px;
+      }
       .list {
         margin-left: 2rem;
       }
@@ -33,6 +35,7 @@
       .pre_code {
         color: #660000;
         font-size: 16px;
+        margin: 16px 0px;
       }
 
       .b_words {
@@ -45,18 +48,9 @@
   <body>
     <h1 id="backtracking_heading">Backtracking</h1>
     <p>Copyright ©2002 by David Matuszek</p>
-    <br />
+
     <p>Backtracking is a form of recursion.</p>
-    <br />
-    <p>
-      The usual scenario is that you are faced with a number of options, and you
-      must choose one of these. After you make your choice you will get a new
-      set of options; just what set of options you get depends on what choice
-      you made. This procedure is repeated over and over until you reach a final
-      state. If you made a good sequence of choices, your final state is a
-      <i>goal state</i>; if you didn't, it isn't.
-    </p>
-    <br />
+
     <p>
       Conceptually, you start at the root of a tree; the tree probably has some
       good leaves and some bad leaves, though it may be that the leaves are all
@@ -64,7 +58,7 @@
       with the root, you choose one of its children to move to, and you keep
       this up until you get to a leaf.
     </p>
-    <br />
+
     <p>
       Suppose you get to a bad leaf. You can <i>backtrack</i> to continue the
       search for a good leaf by revoking your <i>most recent</i> choice, and
@@ -73,9 +67,9 @@
       that node. If you end up at the root with no options left, there are no
       good leaves to be found.
     </p>
-    <br />
+
     <p>This needs an example</p>
-    <br />
+
     <center>
       <img
         id="backtracking_image"
@@ -83,7 +77,7 @@
         alt="Backtracking"
       />
     </center>
-    <br />
+
     <ol class="list" type="1">
       <li>Starting at Root, your options are A and B</li>
       <li>You choose A. At A, your options are C and D. You choose C</li>
@@ -97,7 +91,7 @@
       <li>At B, your options are E and F. Try E.</li>
       <li>E is good. Congratulations!</li>
     </ol>
-    <br />
+
     <p>
       In this example we drew a picture of a tree. The tree is an abstract model
       of the possible sequences of choices we could make. There is also a data
@@ -106,14 +100,14 @@
       structure, backtracking on it is called
       <i>depth-first tree searching.</i>)
     </p>
-    <br />
+
     <h3>The backtracking algorithm.</h3>
-    <br />
+
     <p>
       Here is the algorithm (in pseudocode) for doing backtracking from a given
       node n:
     </p>
-    <br />
+
     <pre class="pre_code">
     boolean solve(Node n) {
         if n is a leaf node {
@@ -127,7 +121,7 @@
         }
     }    
     </pre>
-    <br />
+
     <p>
       Notice that the algorithm is expressed as a <i>boolean</i> function. This
       is essential to understanding the algorithm. If
@@ -137,38 +131,37 @@
       <span class="b_words">solve(n)</span> is false, then there is
       <i>no</i> path that includes n to any goal node
     </p>
-    <br />
+
     <p>How does this work?</p>
-    <br />
+
     <ul class="list">
       <li>If any child of n is solvable, then n is solvable</li>
       <li>If no child of n is solvable, then n is not solvable.</li>
     </ul>
-    <br />
+
     <p>
       Hence, to decide whether any non-leaf node n is solvable (part of a path
       to a goal node), all you have to do is test whether any child of n is
       solvable. This is done recursively, on each child of n. In the above code,
       this is done by the lines
     </p>
-    <br />
+
     <pre class="pre_code">
     for each child c of n {
         if solve(c) succeeds, return true
     }
     return false</pre
     >
-    <br />
+
     <p>
       The backtracking algorithm is simple but important. You should understand
       it thoroughly. Another way of stating it is as follows:
     </p>
-    <br />
+
     <ul class="list">
       <li>
         To search a tree:
-        <br />
-        <br />
+
         <ol class="list" type="1">
           <li>
             If the tree consists of a single leaf, test whether it is a goal
@@ -181,15 +174,15 @@
         </ol>
       </li>
     </ul>
-    <br />
+
     <h3>Non-recursive backtracking, using a stack</h3>
-    <br />
+
     <p>
       Backtracking is a rather typical recursive algorithm, and any recursive
       algorithm can be rewritten as a stack algorithm. In fact, that is how your
       recursive algorithms are translated into machine or assembly language
     </p>
-    <br />
+
     <pre class="pre_code">
     boolean solve(Node n) {
         put node n on the stack;
@@ -207,10 +200,9 @@
         return false
     }</pre
     >
-    <br />
-    <br />
+
     <p>></p>
-    <br />
+
     <p>
       Starting from the root, the only nodes that can be pushed onto the stack
       are the children of the node currently on the top of the stack, and these
@@ -221,12 +213,12 @@
       empty), there must have been no goal nodes at all, and no solution to the
       problem.
     </p>
-    <br />
+
     <p>
       When the stack algorithm terminates successfully, the nodes on the stack
       form (in reverse order) a path from the root to a goal node
     </p>
-    <br />
+
     <p>
       Similarly, when the recursive algorithm finds a goal node, the path
       information is embodied (in reverse order) in the sequence of recursive
@@ -234,12 +226,12 @@
       at a time, by (for instance) printing the node at the current level, or
       storing it in an array.
     </p>
-    <br />
+
     <p>
       Here is the recursive backtracking algorithm, modified slightly to print
       (in reverse order) the nodes along the successful path:
     </p>
-    <br />
+
     <pre class="pre_code">
     boolean solve(Node n) {
         if n is a leaf node {
@@ -259,9 +251,9 @@
         }
     }
     </pre>
-    <br />
+
     <h3>Keeping backtracking simple</h3>
-    <br />
+
     <p>
       All of these versions of the backtracking algorithm are pretty simple, but
       when applied to a real problem, they can get pretty cluttered up with
@@ -269,7 +261,7 @@
       example, if the path represents a series of moves in a chess endgame
       problem, the leaves are the checkmate and stalemate solutions.
     </p>
-    <br />
+
     <p>
       To keep the program clean, therefore, tests like this should be buried in
       methods. In a chess game, for example, you could test whether a node is a
@@ -278,7 +270,7 @@
       encapsulate all the ugly details of figuring out whether any possible
       moves remain.
     </p>
-    <br />
+
     <p>
       Notice that the backtracking altorithms require us to keep track, for each
       node on the current path, which of its children have been tried already
@@ -291,7 +283,7 @@
       move. How do you find these children, and how do you keep track of which
       ones you've already examined?
     </p>
-    <br />
+
     <p>
       The most straightforward way to keep track of which children of the node
       have been tried is as follows: Upon initial entry to the node (that is,
@@ -300,14 +292,14 @@
       are no remaining untried children, and you can return "failure." This is a
       simple approach, but it may require quite a lot of additional work.
     </p>
-    <br />
+
     <p>
       There is an easier way to keep track of which children have been tried,
       <strong>if</strong> you can define an ordering on the children. If there
       is an ordering, and you know which child you just tried, you can determine
       which child to try next.
     </p>
-    <br />
+
     <p>
       For example, you might be able to number the children
       <span class="b_words">1 n</span>, and try them in numerical order. Then,
@@ -320,28 +312,28 @@
       are searching a maze, you can try choices in the order left, straight,
       right (or perhaps north, east, south, west).
     </p>
-    <br />
+
     <p>
       It isn't always easy to find a simple way to order the children of a node.
       In the chess game example, you might number your pieces (or perhaps the
       squares of the board) and try them in numerical order; but in addition
       each piece may also have several moves, and these must also be ordered.
     </p>
-    <br />
+
     <p>
       You can probably find some way to order the children of a node. If the
       ordering scheme is simple enough, you should use it; but if it is too
       cumbersome, you are better off keeping a list of untried children.
     </p>
-    <br />
+
     <h3>Example: TreeSearch</h3>
-    <br />
+
     <p>
       For starters, let's do the simplest possible example of backtracking,
       which is searching an actual tree. We will also use the simplest kind of
       tree, a binary tree.
     </p>
-    <br />
+
     <p>
       A <strong>binary tree</strong> is a data structure composed of
       <strong>node</strong>. One node is designed as the
@@ -355,13 +347,13 @@
       The first example in this paper (which we repeat here) shows a binary
       tree.
     </p>
-    <br />
+
     <center>
       <img src="./assests/images/treesearch.gif" alt="binary tree" />
     </center>
-    <br />
+
     <p>Here's a definition of the BinaryTree class:</p>
-    <br />
+
     <pre class="pre_code">
         public class BinaryTree {
         BinaryTree leftChild = null;
@@ -377,12 +369,12 @@
         }
     }</pre
     >
-    <br />
+
     <p>
       next we will create a TreeSearch class, and in it we will define a method
       makeTree which constructs the above binary tree.
     </p>
-    <br />
+
     <pre class="pre_code">
     static BinaryTree makeTree() {
         BinaryTree root, a, b, c, d, e, f;
@@ -396,21 +388,21 @@
         return root;
     }
     </pre>
-    <br />
+
     <p>Here's a main program to create a binary tree and try to solve it:</p>
-    <br />
+
     <pre class="pre_code">
         public static void main(String args[]) {
             BinaryTree tree = makeTree();
             System.out.println(solvable(tree));
         }
     </pre>
-    <br />
+
     <p>
       And finally, here's the recursive backtracking routine to "solve" the
       binary tree by finding a goal node.
     </p>
-    <br />
+
     <pre class="pre_code">
         static boolean solvable(BinaryTree node) {
             <span style="color:#1CA6D4 ;">/* 1 */</span>  if (node == null) return false;
@@ -420,9 +412,9 @@
             <span style="color:#1CA6D4 ;">/* 5 */</span>  return false;
                 }
     </pre>
-    <br />
+
     <p>Here's what the numbered lines are doing:</p>
-    <br />
+
     <ol class="list" type="1">
       <li>
         If we are given a null node, it's not solvable. This statement is so
@@ -440,19 +432,19 @@
         Since neither child of node is solvable, node itself is not solvable.
       </li>
     </ol>
-    <br />
+
     <p>
       This program runs correctly and produces the unenlightening result
       <span class="b_words">true</span>
     </p>
-    <br />
+
     <p>
       Each time we ask for another node, we have to check if it is null. In the
       above we put that check as the first thing insolvable. An alternative
       would be to check first whether each child exists, and recur only if they
       do. Here's that alternative version
     </p>
-    <br />
+
     <pre class="pre_code">
         static boolean solvable(BinaryTree node) {
         if (node.isGoalNode) return true;
@@ -461,14 +453,14 @@
         return false;
     }</pre
     >
-    <br />
+
     <p>
       I think the first version is simpler, but the second version is slightly
       more efficient.
     </p>
-    <br />
+
     <h3>What are the children?</h3>
-    <br />
+
     <p>
       One of the things that simplifies the above binary tree search is that, at
       each choice point, you can ignore all the previous choices. Previous
@@ -477,44 +469,52 @@
       In many problems, however, you may be able to eliminate children
       immediately, without recursion
     </p>
-    <br />
+
     <p>
       Consider, for example, the problem of four-coloring a map. It is a theorem
       of mathematics that any map on a plane, no matter how convoluted the
       countries are, can be colored with at most four colors, so that no two
       countries that share a border are the same color.
     </p>
-    <br />
+
     <p>
       To color a map, you choose a color for the first country, then a color for
       the second country, and so on, until all countries are colored. There are
       two ways to do this:
     </p>
-    <br />
+
     <ul class="list" style="list-style-type: none">
-        <li>
-          <strong>Method 1.</strong> Try each of the four possible colors, and
-          recur. When you run out of countries, check whether you are at a goal
-          node.
-        </li>
-        <li>
-          <strong>Method 2.</strong> Try only those colors that have not already
-          been used for an adjacent country, and recur. If and when you run out of
-          countries, you have successfully colored the map.
-        </li>
-      </ul>
-      <br>
-      <p>Let's apply each of these two methods to the problem of coloring a checkerboard. This should be easily solvable; after all, a checkerboard only needs two colors.</p>
-      <br>
-      <p>
-        In both methods, the colors are represented by integers, from <span class="b_words">RED=1</span> to <span class="b_words">BLUE=4</span>. We define the following helper methods. The helper method code isn't displayed here because it's not important for understanding the method that does the backtracking.
-      </p>
-      <br>
-      <p>To be added</p>
-      <br>
-      <p>Here's the code for method 1:</p>
-      <br>
-      <pre class="pre_code">
+      <li>
+        <strong>Method 1.</strong> Try each of the four possible colors, and
+        recur. When you run out of countries, check whether you are at a goal
+        node.
+      </li>
+      <li>
+        <strong>Method 2.</strong> Try only those colors that have not already
+        been used for an adjacent country, and recur. If and when you run out of
+        countries, you have successfully colored the map.
+      </li>
+    </ul>
+
+    <p>
+      Let's apply each of these two methods to the problem of coloring a
+      checkerboard. This should be easily solvable; after all, a checkerboard
+      only needs two colors.
+    </p>
+
+    <p>
+      In both methods, the colors are represented by integers, from
+      <span class="b_words">RED=1</span> to <span class="b_words">BLUE=4</span>.
+      We define the following helper methods. The helper method code isn't
+      displayed here because it's not important for understanding the method
+      that does the backtracking.
+    </p>
+
+    <p>To be added</p>
+
+    <p>Here's the code for method 1:</p>
+
+    <pre class="pre_code">
         boolean explore1(int row, int column, int color) {
           if (row >= NUM_ROWS) return mapIsOK();
           map[row][column] = color;
@@ -524,6 +524,7 @@
           }
           return false;
       }
-      </pre>
+      </pre
+    >
   </body>
 </html>
